@@ -1,5 +1,3 @@
-// helpers/jwt.go
-
 package helpers
 
 import (
@@ -8,14 +6,13 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 )
 
-var jwtKey = []byte("your_secret_key") // Güvenli bir şekilde saklanmalı
+var jwtKey = []byte("your_secret_key")
 
 type Claims struct {
 	Username string `json:"username"`
 	jwt.StandardClaims
 }
 
-// Token Oluştur
 func GenerateToken(username string) (string, error) {
 	expirationTime := time.Now().Add(1 * time.Hour)
 	claims := &Claims{
@@ -31,7 +28,6 @@ func GenerateToken(username string) (string, error) {
 	return tokenString, err
 }
 
-// Token Doğrula
 func VerifyToken(tokenString string) (*Claims, error) {
 	claims := &Claims{}
 
