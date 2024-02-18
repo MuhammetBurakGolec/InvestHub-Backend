@@ -6,20 +6,19 @@ import (
 	"github.com/muhammetburakgolec/InvestHub-Backend/helpers"
 )
 
-var sampleUser = models.User{
-	ID:       1,
-	Username: "testuser",
-	Password: "password",
-}
-
 func Login(c *fiber.Ctx) error {
 	var input models.User
 	if err := c.BodyParser(&input); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON"})
 	}
+	var user models.User
 
-	if input.Username != sampleUser.Username || input.Password != sampleUser.Password {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Incorrect username or password"})
+	if err := user.FindByUsername(input.Username); err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "User not found"})
+	}
+
+	if !helpers.ChechPasswordHash(input.Password, user.Password) {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Incorrect password"})
 	}
 
 	token, err := helpers.GenerateToken(input.Username)
@@ -28,4 +27,8 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(fiber.Map{"token": token})
+}
+
+func GetHome(c *fiber.Ctx) error {
+	return c.SendString("Hello, World 👋!")
 }

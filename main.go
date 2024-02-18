@@ -6,11 +6,13 @@ import (
 )
 
 func setupRoutes(app *fiber.App) {
+	app.Get("/", handlers.GetHome)
 	app.Post("/api/login", handlers.Login)
+	// app.Post("/api/register", handlers.Register)
 }
 
 func main() {
 	app := fiber.New()
 	setupRoutes(app)
-	app.Listen(":3000")
+	app.Listen(":5001")
 }
