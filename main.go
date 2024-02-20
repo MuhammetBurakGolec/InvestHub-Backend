@@ -9,7 +9,7 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/", handlers.GetHome)
 	app.Post("/api/login", handlers.Login)
 	app.Get("/api/profile", handlers.GetProfile)
-	// app.Post("/api/register", handlers.Register)
+	app.Post("/api/register", handlers.Register)
 }
 
 func main() {

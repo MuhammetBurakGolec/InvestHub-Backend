@@ -9,3 +9,8 @@ func ChechPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword(hashedPassword, plainPassword)
 	return err == nil
 }
+
+func HashPassword(password string) (string, error) {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	return string(hashedPassword), err
+}
