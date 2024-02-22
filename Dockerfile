@@ -15,8 +15,8 @@ EXPOSE 5001
 
 CMD ["/go/bin/app"]
 
+
+# Veri tabanı İşlemleri Aktarılacak
 # FROM postgres:latest
-
 # COPY ./db/init.sql /docker-entrypoint-initdb.d/
-
 # EXPOSE 5432
