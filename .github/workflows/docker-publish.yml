@@ -26,7 +26,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/investHub-backend:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/investhub-backend:latest
       - name: Deploy To ssh server Aws Lightsail
         uses: appleboy/ssh-action@master
         with:
