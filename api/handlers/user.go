@@ -30,7 +30,7 @@ func Login(c *fiber.Ctx) error {
 }
 
 func GetHome(c *fiber.Ctx) error {
-	return c.SendString("Hello, World 👋!")
+	return c.SendString("<h1>Api Service</h1>")
 }
 
 func GetProfile(c *fiber.Ctx) error {
