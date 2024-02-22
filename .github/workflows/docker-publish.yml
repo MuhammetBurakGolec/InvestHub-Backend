@@ -33,4 +33,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.AWS_KEY }}
-          
+        script: |
+          cd ~/site/InvestHub-Backend/
+          docker-compose up -d 

@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  investhub-backend:
+    image: muhammetburakgolec/investhub-backend
+    ports:
+      - "5001:5001"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: secrets.DB_USER
+      POSTGRES_PASSWORD: secrets.DB_PASSWORD
+      POSTGRES_DB: secrets.DB_NAME
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
+
