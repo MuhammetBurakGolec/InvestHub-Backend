@@ -73,7 +73,8 @@ func Register(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Could not create user"})
 	}
 
-	UserwithoutID := models.User{
+	UserCustom := models.User{
+		Id:         input.Id,
 		Username:   input.Username,
 		Password:   input.Password,
 		GroupId:    input.GroupId,
@@ -82,5 +83,5 @@ func Register(c *fiber.Ctx) error {
 		IsStudent:  input.IsStudent,
 	}
 
-	return c.JSON(UserwithoutID)
+	return c.JSON(UserCustom)
 }

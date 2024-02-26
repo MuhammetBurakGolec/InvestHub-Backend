@@ -17,6 +17,10 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
+# Go bin file
+main
+
+
 # jetbrains
 .idea
 
@@ -26,3 +30,6 @@
 
 # Go workspace file
 go.work
+
+# Docker file
+.docker-compose.yml.swp
