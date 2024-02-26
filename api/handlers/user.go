@@ -33,7 +33,7 @@ func GetHome(c *fiber.Ctx) error {
 	return c.SendString("<h1>Api Service</h1>")
 }
 
-func GetProfile(c *fiber.Ctx) error {
+func GetUser(c *fiber.Ctx) error {
 	var input models.User
 	if err := c.BodyParser(&input); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON"})
@@ -41,7 +41,7 @@ func GetProfile(c *fiber.Ctx) error {
 
 	var user models.User
 
-	if err := user.GetByID(input.Id); err != nil {
+	if err := user.GetByUserID(input.Id); err != nil {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "User not found"})
 	}
 

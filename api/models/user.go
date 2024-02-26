@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+
 	"github.com/muhammetburakgolec/InvestHub-Backend/db"
 )
 
@@ -24,7 +25,7 @@ func (u *User) FindByUsername(username string) error {
 	return nil
 }
 
-func (u *User) GetByID(id uint) error {
+func (u *User) GetByUserID(id uint) error {
 	gormDB := db.GetDB()
 
 	if err := gormDB.Where("id = ?", id).First(&u).Error; err != nil {

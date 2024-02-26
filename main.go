@@ -6,10 +6,22 @@ import (
 )
 
 func setupRoutes(app *fiber.App) {
+
+	// Home Routes
 	app.Get("/", handlers.GetHome)
+
+	// Authorization Routes
 	app.Post("/api/login", handlers.Login)
-	app.Get("/api/profile", handlers.GetProfile)
 	app.Post("/api/register", handlers.Register)
+
+	// User Routes
+	app.Get("/api/user", handlers.GetUser)
+
+	// Group Routes
+	app.Get("/api/group", handlers.GetGroup)
+	app.Post("/api/group", handlers.CreateGroup)
+
+	// User Routes
 }
 
 func main() {
