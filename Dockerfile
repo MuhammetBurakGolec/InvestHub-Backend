@@ -5,15 +5,15 @@ WORKDIR /app
 COPY go.mod ./
 COPY go.sum ./
 
-RUN go mod download
+RUN go mod tidy
 
 COPY . .
 
-RUN go build -o /go/bin/app
+RUN go build -o main .
 
 EXPOSE 5001
 
-CMD ["/go/bin/app"]
+CMD ["./main"]
 
 
 # Veri tabanı İşlemleri Aktarılacak

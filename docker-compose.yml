@@ -1,23 +1,33 @@
 version: '3.8'
+
 services:
   investhub-backend:
-    image: muhammetburakgolec/investhub-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "5001:5001"
     depends_on:
       - postgres
+    networks:
+      - backend-network
 
   postgres:
     image: postgres
-    ports:
-      - "5432:5432"
     environment:
-      POSTGRES_USER: secrets.DB_USER
-      POSTGRES_PASSWORD: secrets.DB_PASSWORD
-      POSTGRES_DB: secrets.DB_NAME
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+    networks:
+      - backend-network
 
 volumes:
   postgres-data:
 
+networks:
+  backend-network:
+    driver: bridge
