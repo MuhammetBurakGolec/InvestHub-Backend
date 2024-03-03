@@ -34,6 +34,14 @@ func (u *User) GetByUserID(id uint) error {
 	return nil
 }
 
+func (u *User) GetByAllGroupId(groupId uint) error {
+	gormDB := db.GetDB()
+
+	if err := gormDB.Where("group_id = ?", groupId).Error; err != nil {
+		return err
+	}
+	return nil
+}
 func (u *User) Register() error {
 	gormDB := db.GetDB()
 

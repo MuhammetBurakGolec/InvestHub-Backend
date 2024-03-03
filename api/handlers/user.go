@@ -85,3 +85,26 @@ func Register(c *fiber.Ctx) error {
 
 	return c.JSON(UserCustom)
 }
+
+func GetByAllByGroupId(c *fiber.Ctx) error {
+	var input models.User
+	if err := c.BodyParser(&input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON"})
+	}
+
+	var user models.User
+
+	if err := user.GetByAllGroupId(input.GroupId); err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "User not found"})
+	}
+
+	userWithoutPassword := models.User{
+		Id:         user.Id,
+		Username:   user.Username,
+		IsAdmin:    user.IsAdmin,
+		IsInvestor: user.IsInvestor,
+		IsStudent:  user.IsStudent,
+	}
+
+	return c.JSON(userWithoutPassword)
+}

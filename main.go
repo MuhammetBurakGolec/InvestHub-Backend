@@ -20,6 +20,7 @@ func setupRoutes(app *fiber.App) {
 	// Group Routes
 	app.Get("/api/group", handlers.GetGroup)
 	app.Post("/api/group", handlers.CreateGroup)
+	app.Get("/api/group/:id", handlers.GetByAllByGroupId)
 
 	// User Routes
 }

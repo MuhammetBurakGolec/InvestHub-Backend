@@ -31,14 +31,14 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/investhub-backend:latest
 
-      - name: Deploy to AWS Lightsail via SSH
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.AWS_KEY }}
-          script: |
-            cd ~/site/InvestHub-Backend/
-            docker-compose pull
-            docker-compose up -d
+      # - name: Deploy to AWS Lightsail via SSH
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.AWS_KEY }}
+      #     script: |
+      #       cd ~/site/InvestHub-Backend/
+      #       docker-compose pull
+      #       docker-compose up -d
 
