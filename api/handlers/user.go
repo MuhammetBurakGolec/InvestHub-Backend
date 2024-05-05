@@ -9,15 +9,15 @@ import (
 func Login(c *fiber.Ctx) error {
 	var input models.User
 	if err := c.BodyParser(&input); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON"})
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": helpers.PARSE_ERROR})
 	}
 	var user models.User
 
 	if err := user.FindByUsername(input.Username); err != nil {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "User not found"})
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": helpers.USER_NOT_FOUND})
 	}
 	if !helpers.ChechPasswordHash(input.Password, user.Password) {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Incorrect password"})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": helpers.PASSWORD_ERROR})
 	}
 
 	token, err := helpers.GenerateToken(user.Id, user.Username, user.GroupId, user.IsAdmin, user.IsInvestor, user.IsStudent)
@@ -36,13 +36,13 @@ func GetHome(c *fiber.Ctx) error {
 func GetUser(c *fiber.Ctx) error {
 	var input models.User
 	if err := c.BodyParser(&input); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON"})
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": helpers.PARSE_ERROR})
 	}
 
 	var user models.User
 
 	if err := user.GetByUserID(input.Id); err != nil {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "User not found"})
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": helpers.USER_NOT_FOUND})
 	}
 
 	userWithoutPassword := models.User{
@@ -59,18 +59,18 @@ func GetUser(c *fiber.Ctx) error {
 func Register(c *fiber.Ctx) error {
 	var input models.User
 	if err := c.BodyParser(&input); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON"})
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": helpers.PARSE_ERROR})
 	}
 
 	hashedPassword, err := helpers.HashPassword(input.Password)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Could not hash password"})
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": helpers.PASSWORD_HASH_ERROR})
 	}
 
 	input.Password = hashedPassword
 
 	if err := input.Register(); err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Could not create user"})
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": helpers.USER_CREATE_ERROR})
 	}
 
 	UserCustom := models.User{
@@ -89,13 +89,13 @@ func Register(c *fiber.Ctx) error {
 func GetByAllByGroupId(c *fiber.Ctx) error {
 	var input models.User
 	if err := c.BodyParser(&input); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON"})
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": helpers.PARSE_ERROR})
 	}
 
 	var user models.User
 
 	if err := user.GetByAllGroupId(input.GroupId); err != nil {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "User not found"})
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": helpers.USER_NOT_FOUND})
 	}
 
 	userWithoutPassword := models.User{
